@@ -1,0 +1,18 @@
+#!/bin/sh
+if [[ "${1}" == "" ]]; then
+	echo "FILE NEEDS TO BE SPECIFIED!"
+	exit 0
+fi
+
+# import configuration file
+source /etc/addsrv.conf
+INP_FILE="${1}"
+
+
+# check verbose mode
+if [[ "${VERBOSE}" == "YES" ]]; then
+	rsync -v "${RSYNC_FLAGS}" "${INP_FILE}" "${SERV_USER}"@"${SERV_IP}":"${SERV_DIR}"
+	exit 0
+fi
+rsync "${RSYNC_FLAGS}" "${INP_FILE}" "${SERV_USER}"@"${SERV_IP}":"${SERV_DIR}"
+exit 0
